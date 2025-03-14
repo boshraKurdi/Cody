@@ -26,6 +26,7 @@ class AuthController extends Controller
         }
 
         $user = Auth::user();
+        $user->media;
         return response()->json([
             'status' => 'success',
             'user' => $user,
@@ -54,6 +55,7 @@ class AuthController extends Controller
         }
 
         $token = Auth::login($user);
+        $user->media;
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully',
