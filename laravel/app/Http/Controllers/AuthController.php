@@ -49,6 +49,9 @@ class AuthController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
+        if ($request->media) {
+            $user->addMediaFromRequest('media')->toMediaCollection('users');
+        }
 
         $token = Auth::login($user);
         return response()->json([
