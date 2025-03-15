@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\CodeController;
 use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\PageController;
@@ -61,5 +62,9 @@ Route::group(['prefix' => 'code'], function () {
     Route::get('show/{code}', [CodeController::class, 'show'])
         ->middleware('auth:api');
     Route::delete('destroy/{code}', [CodeController::class, 'destroy'])
+        ->middleware('auth:api');
+});
+Route::group(['prefix' => 'chat'], function () {
+    Route::get('index', [ChatController::class, 'index'])
         ->middleware('auth:api');
 });

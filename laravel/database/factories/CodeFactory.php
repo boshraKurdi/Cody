@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Page;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class CodeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->title,
+            'description' => $this->faker->text,
+            'code' => $this->faker->text,
+            'page_id' => Page::query()->inRandomOrder()->first()->id,
         ];
     }
 }

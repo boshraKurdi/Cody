@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Feature;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,9 @@ class PageFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->title,
+            'description' => $this->faker->text,
+            'feature_id' => Feature::query()->inRandomOrder()->first()->id,
         ];
     }
 }

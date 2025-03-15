@@ -13,7 +13,7 @@ class ProjectController extends Controller
      */
     public function index()
     {
-        $index = Project::where('user_id', auth()->id())->get();
+        $index = Project::where('user_id', auth()->id())->with('media')->get();
         return response()->json(['data' => $index]);
     }
     /**
@@ -22,6 +22,9 @@ class ProjectController extends Controller
     public function store(StoreProjectRequest $request)
     {
         $store = Project::create($request->validated());
+        if ($request->media) {
+            $store->addMediaFromRequest('media')->toMediaCollection('projects');
+        }
         return response()->json(['data' => $store, 'message' => 'Your project has been successfully created, now go ahead and share your creativity with the world!']);
     }
 
@@ -30,7 +33,7 @@ class ProjectController extends Controller
      */
     public function show(Project $project)
     {
-        return response()->json(['data' => $project]);
+        return response()->json(['data' => $project->load('media')]);
     }
 
     /**
@@ -39,7 +42,9 @@ class ProjectController extends Controller
     public function update(UpdateProjectRequest $request, Project $project)
     {
         $project->update($request->validated());
-
+        if ($request->media) {
+            $project->addMediaFromRequest('media')->toMediaCollection('projects');
+        }
         return response()->json([
             'message' => 'project has been updated successfully',
             'data' => $project

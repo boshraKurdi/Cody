@@ -11,7 +11,7 @@ class StoreChatRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class StoreChatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => "required|string|max:256",
+            "feature_id " => "required|exists:features,id",
+        ];
+    }
+    public function validated($key = null, $default = null)
+    {
+        return [
+            'title' => $this->title,
+            'feature_id' => $this->feature_id,
         ];
     }
 }

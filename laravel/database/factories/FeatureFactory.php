@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Project;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Features>
  */
-class FeaturesFactory extends Factory
+class FeatureFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -17,7 +18,9 @@ class FeaturesFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'title' => $this->faker->title,
+            'description' => $this->faker->text,
+            'project_id' => Project::query()->inRandomOrder()->first()->id,
         ];
     }
 }
