@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreChatRequest extends FormRequest
+class AddCodeWithNewFeatureAndPageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,13 @@ class StoreChatRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => "required|string|max:256",
-        ];
-    }
-    public function validated($key = null, $default = null)
-    {
-        return [
-            'title' => $this->title,
-            'user_id' => auth()->id(),
+            'feature_title'    => 'required|string|max:255',
+            'page_title'       => 'required|string|max:255',
+            'code_title'       => 'required|string|max:255',
+            'code_description' => 'nullable|string',
+            'feature_description' => 'nullable|string',
+            'page_description' => 'nullable|string',
+            'code_content'     => 'required|string',
         ];
     }
 }

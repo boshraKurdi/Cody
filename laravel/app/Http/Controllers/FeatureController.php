@@ -13,7 +13,7 @@ class FeatureController extends Controller
      */
     public function index($id)
     {
-        $index = Feature::where('project_id', $id)->get();
+        $index = Feature::where('project_id', $id)->with('pages')->get();
         return response()->json(['data' => $index]);
     }
 

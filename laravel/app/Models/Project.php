@@ -16,7 +16,8 @@ class Project extends Model implements HasMedia
         'title',
         'description',
         'language',
-        'user_id'
+        'user_id',
+        "is_favorite"
     ];
 
     public function features()

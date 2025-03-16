@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
+use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
@@ -21,7 +22,20 @@ class MessageController extends Controller
      */
     public function store(StoreMessageRequest $request)
     {
-        //
+
+        $store = Message::create($request->validated());
+        return response()->json(['data' => $store, 'message' => 'Your Message has been successfully created']);
+    }
+
+    public function create(Request $request)
+    {
+
+        $store = Message::create([
+            'text' => $request->text,
+            'sender' => 1,
+            'chat_id' => $request->chat_id,
+        ]);
+        return response()->json(['data' => $store, 'message' => 'Ai Message has been successfully created']);
     }
 
     /**

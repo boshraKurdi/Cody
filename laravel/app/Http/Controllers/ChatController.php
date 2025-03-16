@@ -14,13 +14,7 @@ class ChatController extends Controller
      */
     public function index()
     {
-        $index = DB::table('chats')
-            ->join('features', 'features.id', '=', 'chats.feature_id')
-            ->join('projects', 'projects.id', '=', 'features.project_id')
-            ->join('users', 'users.id', '=', 'projects.user_id')
-            ->where('users.id', auth()->id())
-            ->select('chats.*')
-            ->get();
+        $index = Chat::where('user_id', auth()->id())->get();
         return response()->json(['data' => $index]);
     }
 
@@ -38,7 +32,7 @@ class ChatController extends Controller
      */
     public function show(Chat $chat)
     {
-        //
+        return response()->json(['data' => $chat->load('messages')]);
     }
 
     /**

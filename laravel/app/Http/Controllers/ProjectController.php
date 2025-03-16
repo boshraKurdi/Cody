@@ -16,6 +16,23 @@ class ProjectController extends Controller
         $index = Project::where('user_id', auth()->id())->with('media')->get();
         return response()->json(['data' => $index]);
     }
+
+
+    public function favorite()
+    {
+
+        $index = Project::where('user_id', auth()->id())->where('is_favorite', 1)->with('media')->get();
+        return response()->json(['data' => $index]);
+    }
+
+    public function SetFavorite(Project $project)
+    {
+
+        $project->update([
+            'is_favorite' => 1
+        ]);
+        return response()->json(['message' => 'The project has been successfully added to favorites.']);
+    }
     /**
      * Store a newly created resource in storage.
      */
