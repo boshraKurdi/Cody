@@ -23,8 +23,43 @@ class MessageController extends Controller
     public function store(StoreMessageRequest $request)
     {
 
-        $store = Message::create($request->validated());
-        return response()->json(['data' => $store, 'message' => 'Your Message has been successfully created']);
+        $userQuestion = $request->input('text');
+
+        try {
+            // ارسال الطلب إلى Python Service
+            $client = new \GuzzleHttp\Client();
+            $response = $client->post('http://127.0.0.1:8001/generate-code/', [
+                'json' => [
+                    'user_question' => $userQuestion
+                ]
+            ]);
+
+            $data = json_decode($response->getBody()->getContents(), true);
+
+            $answer = $data['answer'];
+
+            // تخزين السؤال والإجابة في قاعدة البيانات
+            $user = Message::create([
+                'text' => $request->text,
+                'sender' => 0,
+                'chat_id' => $request->chat_id,
+            ]);
+            $ai = Message::create([
+                'text' => $answer,
+                'sender' => 1,
+                'chat_id' => $request->chat_id,
+            ]);
+            // ارجاع الرد للواجهة
+            return response()->json([
+                'message' => 'تم الحصول على الإجابة!',
+                'data'    => $answer
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'حدث خطأ أثناء المعالجة',
+                'error'   => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function create(Request $request)

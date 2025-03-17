@@ -26,13 +26,4 @@ class StoreMessageRequest extends FormRequest
             "chat_id" => "required|exists:chats,id",
         ];
     }
-
-    public function validated($key = null, $default = null)
-    {
-        return [
-            'text' => $this->text,
-            'sender' => 0,
-            'chat_id' => $this->chat_id,
-        ];
-    }
 }

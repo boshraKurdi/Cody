@@ -170,6 +170,14 @@ class CodeController extends Controller
             'page_id' => $page->id,
         ]);
 
+        if ($request->hasFile('page_media')) {
+            $page->addMediaFromRequest('page_media')->toMediaCollection('pages');
+        }
+
+        if ($request->hasFile('code_media')) {
+            $code->addMediaFromRequest('code_media')->toMediaCollection('codes');
+        }
+
         return response()->json([
             'message' => 'The new page has been created and the code has been added successfully!',
             'data' => $code
