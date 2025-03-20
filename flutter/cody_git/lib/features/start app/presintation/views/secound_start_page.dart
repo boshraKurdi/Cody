@@ -36,7 +36,8 @@ class SecoundStartedPage extends StatelessWidget {
               right: MediaQuery.of(context).size.width * .1,
               child: MaterialButton(
                 onPressed: () {
-                  GoRouter.of(context).goNamed(Names.MainTabPage);
+                  GoRouter.of(context).pushNamed(Names.RegisterPage);
+
                 },
                 child: Container(
                   height: 80,

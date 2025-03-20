@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../home/home_page.dart';
+import '../../../home/wedgits/custtom_app_aseet_image.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({super.key});
